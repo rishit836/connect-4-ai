@@ -1,5 +1,5 @@
 import numpy as np
-from ai import get_best_move,get_children
+from ai import get_best_move
 
 game_board = np.zeros((7,6))
 
