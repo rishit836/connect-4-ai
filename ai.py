@@ -1,5 +1,6 @@
 import random
 import numpy as np
+from multiprocessing import Pool
 
 def get_available_moves(game_board):
     moves = []
@@ -23,7 +24,7 @@ def get_children(game_board, player):
     return children
 
 
-def minimax(game_board, player,depth=0,max_depth=5,alpha=-np.inf,beta=np.inf):
+def minimax(game_board, player,depth=0,max_depth=7,alpha=-np.inf,beta=np.inf):
 
     result = check_winner(game_board)
     if result is not None:
@@ -37,11 +38,12 @@ def minimax(game_board, player,depth=0,max_depth=5,alpha=-np.inf,beta=np.inf):
         return 0
         
 
-
     if player == 1: #minimize
         best_score = np.inf
         for child in get_children(game_board,player):
+            
             score = minimax(child,-player,depth=depth+1,alpha=alpha,beta=beta)
+            print(depth)
             best_score = min(score,best_score)
             beta = min(beta,best_score)
 
@@ -55,6 +57,7 @@ def minimax(game_board, player,depth=0,max_depth=5,alpha=-np.inf,beta=np.inf):
         best_score = -np.inf
         for child in get_children(game_board,player):
             score = minimax(child,-player,depth=depth+1,alpha = alpha,beta=beta)
+            
             best_score=max(score,best_score)
             alpha = max(alpha,best_score)
 
